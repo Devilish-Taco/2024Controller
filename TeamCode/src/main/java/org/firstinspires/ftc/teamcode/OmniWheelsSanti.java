@@ -64,9 +64,13 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Omni Linear OpMode", group="Linear OpMode")
+
+
+
+
+@TeleOp(name="OmniWheelsHarlan", group="Linear OpMode")
 @Disabled
-public class OmniWheels extends LinearOpMode {
+public class OmniWheelsSanti extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -75,8 +79,8 @@ public class OmniWheels extends LinearOpMode {
     private DcMotor rightFrontMotor = null;
     private DcMotor rightBackMotor = null;
     
-    private Servo leftScoopLift;
-    private Servo rightScoopLift;
+    private Servo leftScoopLift = null;
+    private Servo rightScoopLift = null;
 
     @Override
     public void runOpMode() {
@@ -88,6 +92,13 @@ public class OmniWheels extends LinearOpMode {
         rightFrontWheel = hardwareMap.get(DcMotor.class, "right_front_wheel");
         rightBackWheel = hardwareMap.get(DcMotor.class, "right_back_wheel");
 
+leftScoopLift = hardwareMap.get(Servo.class, "left_scoop_lift");
+rightScoopLift = hardwareMap.get(Servo.class, "right_scoop_lift");
+
+
+
+        
+        
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
         // ########################################################################################
@@ -119,6 +130,12 @@ public class OmniWheels extends LinearOpMode {
             double lateral =  gamepad1.right_stick_x; // Strafe left/right
             double yaw     =  gamepad1.left_stick_x; // Rotate left/right
 
+            static final double INCREMENT = 0.01
+            static final int CYCLE_MS = 50;
+            static final double MAX_POS = 1.0;
+            static final double MIN_POS = 0.0
+
+            
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
             double leftFrontPower  = axial + lateral + yaw;
@@ -126,6 +143,9 @@ public class OmniWheels extends LinearOpMode {
             double leftBackPower   = axial - lateral + yaw;
             double rightBackPower  = axial + lateral - yaw;
 
+
+
+            
             // Normalize the values so no wheel power exceeds 100%
             // This ensures that the robot maintains the desired motion.
             max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
@@ -149,6 +169,15 @@ public class OmniWheels extends LinearOpMode {
             //      the setDirection() calls above.
             // Once the correct motors move in the correct direction re-comment this code.
 
+
+
+
+
+
+
+
+
+            
             /*
             leftFrontPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
             leftBackPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
@@ -156,6 +185,11 @@ public class OmniWheels extends LinearOpMode {
             rightBackPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
             */
 
+
+
+
+
+            
             // Send calculated power to wheels
             leftFrontMotor.setPower(leftFrontPower);
             rightFrontMotor.setPower(rightFrontPower);
@@ -169,3 +203,11 @@ public class OmniWheels extends LinearOpMode {
             telemetry.update();
         }
     }}
+
+
+
+
+
+
+
+
