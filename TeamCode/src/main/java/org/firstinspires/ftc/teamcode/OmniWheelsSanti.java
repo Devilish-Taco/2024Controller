@@ -135,7 +135,11 @@ rightScoopLift = hardwareMap.get(Servo.class, "right_scoop_lift");
             static final double MAX_POS = 1.0;
             static final double MIN_POS = 0.0
 
-            
+            boolean drop = button a;
+            boolean lift = button x;
+            boolean grab = gamepad2.right_bumper > 0.5;=
+            boolean release = gamepad2.right_bumper;
+                
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
             double leftFrontPower  = axial + lateral + yaw;
@@ -159,6 +163,21 @@ rightScoopLift = hardwareMap.get(Servo.class, "right_scoop_lift");
                 rightBackPower  /= max;
             }
 
+            if (lift = true) {
+                leftScoopLift. setPosition(0);
+            }
+
+            
+            if (lift = true) {
+                leftScoopLift. setPosition(Math.min(1,leftScoopLift. getPosition()+0.01;
+            }
+            
+
+            if (drop = true) {
+                rightScoopLift. setPosition(Math.max(0,rightScoopLift. getPosition(0)-0.01;
+            }
+
+            
             // This is test code:
             //
             // Uncomment the following code to test your motor directions.
