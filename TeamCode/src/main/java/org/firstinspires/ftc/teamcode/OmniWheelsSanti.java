@@ -35,6 +35,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
+import java.util.List;
+import java.util.ArrayList;
 
 /*
  * This file contains an example of a Linear "OpMode".
@@ -82,6 +84,9 @@ public class OmniWheelsSanti extends LinearOpMode {
     private Servo leftScoopLift = null;
     private Servo rightScoopLift = null;
 
+    List<Object> allMotors = new ArrayList <>();
+    List<Servo> allServos = new ArrayList <>();
+
     @Override
     public void runOpMode() {
 
@@ -91,11 +96,18 @@ public class OmniWheelsSanti extends LinearOpMode {
         leftBackWheel  = hardwareMap.get(DcMotor.class, "left_back_wheel");
         rightFrontWheel = hardwareMap.get(DcMotor.class, "right_front_wheel");
         rightBackWheel = hardwareMap.get(DcMotor.class, "right_back_wheel");
+        
+        allMotors.add(leftFrontDrive);
+        allMotors.add(rightFrontDrive);
+        allMotors.add(leftBackDrive);
+        allMotors.add(rightBackDrive);
 
-leftScoopLift = hardwareMap.get(Servo.class, "left_scoop_lift");
-rightScoopLift = hardwareMap.get(Servo.class, "right_scoop_lift");
-
-
+        
+        leftScoopLift = hardwareMap.get(Servo.class, "left_scoop_lift");
+        rightScoopLift = hardwareMap.get(Servo.class, "right_scoop_lift");
+        
+        allServos. add(leftScoopLift);
+        allServos. add(rightScoopLift);
 
         
         
@@ -130,10 +142,15 @@ rightScoopLift = hardwareMap.get(Servo.class, "right_scoop_lift");
             double lateral =  gamepad1.right_stick_x; // Strafe left/right
             double yaw     =  gamepad1.left_stick_x; // Rotate left/right
 
+            telemetry. addData ("Axial", axial);
+            telemetry. addData ("Lateral", lateral);
+            telemetry. addData ("Yaw", yaw);
+            
             static final double INCREMENT = 0.01
             static final int CYCLE_MS = 50;
             static final double MAX_POS = 1.0;
             static final double MIN_POS = 0.0
+            static final double LIFT_SPEED = 1.0
 
             boolean drop = button a;
             boolean lift = button x;
@@ -177,8 +194,31 @@ rightScoopLift = hardwareMap.get(Servo.class, "right_scoop_lift");
                 rightScoopLift. setPosition(Math.max(0,rightScoopLift. getPosition(0)-0.01;
             }
 
+                       if (lift = true) {
+                leftScoopLift. setPosition(Math.min(1,leftScoopLift. getPosition()+0.01;
+            }
             
-            // This is test code:
+
+            if (drop = true) {
+                rightScoopLift. setPosition(Math.max(0,rightScoopLift. getPosition(0)-0.01;
+            }
+
+
+            if (lift) {
+                rightScoopLift. setpower (LIFT_SPEED);
+            } else if 
+
+
+                
+            if (lower) {
+                rightScoopLift. setpower (-LIFT_SPEED);
+            } 
+            
+                // This is test cde
+                
+                
+                
+                :
             //
             // Uncomment the following code to test your motor directions.
             // Each button should make the corresponding motor run FORWARD.
@@ -216,10 +256,19 @@ rightScoopLift = hardwareMap.get(Servo.class, "right_scoop_lift");
             rightBackMotor.setPower(rightBackPower);
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
-            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
-            telemetry.update();
+            // telemetry.addData("Status", "Run Time: " + runtime.toString());
+            // telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
+            // telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
+            for (DcMotor thisMotor in allMotors) {
+                telemetry. addData("MotorSpeed", thisMotor. getSpeed());
+            }
+            
+            for (Servo thisServo in allServos) {
+                telemetry.addData("ServoPosition", thisServo. getPosition ());
+            }
+                 
+                    
+                telemetry.update();
         }
     }}
 
